@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { User } from "types/types";
 import { BASE_URL } from "utils/requests";
@@ -17,7 +17,8 @@ const LoginForm = () => {
     })
 
     const url = 'http://localhost:8080';
-    const requestData = () => {
+    const requestData = (evt: any) => {
+        evt.preventDefault();
         axios.get(`${url}/login`,{
             params: {
                 email: email,
@@ -25,10 +26,11 @@ const LoginForm = () => {
             }
         }).then((response) => {
             setUser(response.data);
-            console.log(user);
         });
     }
-    useEffect(requestData, []);
+
+    useEffect(() => {
+    }, [ email, password]);
 
 
     return (
